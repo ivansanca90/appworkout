@@ -194,9 +194,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Imposta il cerchio SVG
         const circle = document.querySelector('.timer-progress');
-        const radius = circle.r.baseVal.value;
+        const radius = 45; // Deve corrispondere al valore r nel SVG
         const circumference = radius * 2 * Math.PI;
+        
+        // Imposta le proprietà iniziali del cerchio
         circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = '0';
         
         let timeLeft = seconds;
         

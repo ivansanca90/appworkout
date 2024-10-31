@@ -196,6 +196,9 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 1001;
     overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal.active {
@@ -205,14 +208,14 @@ body {
 }
 
 .modal-content {
-    position: relative;
-    margin: 20px auto;
     background: var(--background-highlight);
     padding: 24px;
     border-radius: 12px;
     width: 90%;
     max-width: 400px;
     color: var(--text-primary);
+    position: relative;
+    margin: 20px;
 }
 
 .form-header {
@@ -521,6 +524,37 @@ body {
     .modal-content {
         width: 95%;
         padding: 16px;
+        margin: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+        padding: 16px;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    /* Previene lo zoom su input focus in iOS */
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px !important;
     }
 }
 
@@ -561,17 +595,20 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 1001;
     overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
-    position: relative;
-    margin: 20px auto;
     background: var(--background-highlight);
     padding: 24px;
     border-radius: 12px;
     width: 90%;
     max-width: 400px;
     color: var(--text-primary);
+    position: relative;
+    margin: 20px;
 }
 
 /* Stile per i form nel modal */
@@ -635,3 +672,43 @@ body {
     justify-content: center;
     z-index: 100;
 }
+
+/* Orientamento landscape */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .modal-content {
+        max-height: 85vh;
+        margin: 20px auto;
+    }
+
+    .form-buttons {
+        flex-direction: row;
+    }
+}
+
+// Aggiungi questa funzione per gestire meglio lo scroll del modal
+function lockBodyScroll(lock) {
+    document.body.style.overflow = lock ? 'hidden' : '';
+}
+
+// Modifica la gestione del modal
+addButton.addEventListener('click', () => {
+    editingIndex = null;
+    form.reset();
+    modal.style.display = 'block';
+    lockBodyScroll(true);
+});
+
+cancelBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    form.reset();
+    lockBodyScroll(false);
+});
+
+// Chiudi il modal quando si clicca fuori
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+        form.reset();
+        lockBodyScroll(false);
+    }
+});
