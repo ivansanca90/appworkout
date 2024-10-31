@@ -2,89 +2,93 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#121212">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Workout</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="detail-style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Allenamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/workout-detail.css">
 </head>
 <body>
-    <!-- Aggiungiamo l'header con il pulsante back -->
-    <div class="header">
-        <button class="back-button" onclick="window.location.href='index.html'">←</button>
-        <h1>Workout</h1>
+    <div class="container">
+        <header class="detail-header">
+            <button class="back-button" onclick="window.location.href='index.html'">
+                <span class="material-icons">arrow_back</span>
+            </button>
+            <h1 id="workoutTitle">Nome Allenamento</h1>
+            <button class="add-exercise-btn">
+                <span class="material-icons">add</span>
+                Aggiungi Esercizio
+            </button>
+        </header>
+
+        <main>
+            <div id="exerciseList" class="exercise-list">
+                <!-- Gli esercizi verranno inseriti qui dinamicamente -->
+            </div>
+        </main>
     </div>
 
-    <div class="exercise-container">
-        <div id="empty-state" class="empty-state">
-            <p>Clicca sul pulsante + per aggiungere il tuo allenamento</p>
-        </div>
-    </div>
-
-    <button class="add-exercise-button">+</button>
-
-    <!-- Modal per nuovo/modifica esercizio -->
-    <div class="modal" id="exerciseModal">
+    <!-- Modal per aggiungere/modificare esercizi -->
+    <div id="exerciseModal" class="modal">
         <div class="modal-content">
-            <h2>Nuovo Esercizio</h2>
-            <form id="newExerciseForm">
-                <input type="text" placeholder="Nome esercizio" required>
-                <div class="form-row">
-                    <input type="number" placeholder="Serie" required>
-                    <input type="number" placeholder="Ripetizioni" required>
-                    <input type="number" placeholder="Recupero (sec)" required>
+            <div class="modal-header">
+                <h2>Nuovo Esercizio</h2>
+                <button class="close-button" onclick="closeModal()">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <form id="exerciseForm">
+                <div class="form-group">
+                    <label for="exerciseName">Nome Esercizio</label>
+                    <input type="text" 
+                           id="exerciseName" 
+                           placeholder="es: Panca Piana"
+                           autocomplete="off"
+                           required>
                 </div>
-                <div class="form-buttons">
-                    <button type="button" class="cancel-btn">Annulla</button>
-                    <button type="submit" class="save-btn">Salva</button>
+                <div class="form-group">
+                    <label for="exerciseSets">Serie</label>
+                    <div class="number-input">
+                        <button type="button" onclick="decrementValue('exerciseSets')">-</button>
+                        <input type="number" 
+                               id="exerciseSets" 
+                               min="1" 
+                               value="3"
+                               required>
+                        <button type="button" onclick="incrementValue('exerciseSets')">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exerciseRest">Recupero (secondi)</label>
+                    <div class="number-input">
+                        <button type="button" onclick="decrementValue('exerciseRest')">-</button>
+                        <input type="number" 
+                               id="exerciseRest" 
+                               min="0" 
+                               step="15"
+                               value="60"
+                               required>
+                        <button type="button" onclick="incrementValue('exerciseRest')">+</button>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Annulla</button>
+                    <button type="submit" class="btn-primary">Salva</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="timer-container">
-        <h2 class="timer-title">RECUPERO</h2>
-        <div class="timer-circle">
-            <svg class="timer-svg" viewBox="0 0 100 100">
-                <circle class="timer-background"
-                        cx="50"
-                        cy="50"
-                        r="45"/>
-                <circle class="timer-progress"
-                        cx="50"
-                        cy="50"
-                        r="45"/>
-            </svg>
-            <div class="timer-display">00</div>
-        </div>
-        <button class="end-timer-button">Termina recupero</button>
-    </div>
-
-    <div class="bottom-nav">
-        <button>
-            <span class="icon">👤</span>
-            <span>Profilo</span>
-        </button>
-        <button>
-            <span class="icon">📅</span>
-            <span>Promemoria</span>
-        </button>
-        <button class="active">
-            <span class="icon">▣</span>
-            <span>Home</span>
-        </button>
-        <button>
-            <span class="icon">💬</span>
-            <span>Chat</span>
-        </button>
-        <button>
-            <span class="icon">🔔</span>
-            <span>Notifiche</span>
+    <div class="complete-workout-container">
+        <button class="complete-workout-btn" onclick="workoutDetailManager.completeWorkout()">
+            <span class="material-icons">check_circle</span>
+            Allenamento Completato
         </button>
     </div>
 
-    <script src="detail-script.js"></script>
+    <script src="js/workout-detail.js"></script>
 </body>
 </html> 

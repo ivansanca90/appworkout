@@ -1,0 +1,235 @@
+.completed-workouts-list {
+    padding: 20px 0;
+}
+
+.completed-workout-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.workout-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0;
+}
+
+.workout-info {
+    flex: 1;
+}
+
+.workout-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 8px;
+}
+
+.workout-date {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.workout-details {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f5f5f7;
+}
+
+.workout-details.expanded {
+    display: block;
+}
+
+.expand-icon {
+    color: #666;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.exercise-item {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.exercise-name {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.exercise-details {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.sets-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.sets-table th,
+.sets-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.sets-table th {
+    font-weight: 500;
+    color: #666;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+@media (max-width: 480px) {
+    .completed-workout-card {
+        padding: 15px;
+    }
+    
+    .exercise-item {
+        padding: 12px;
+    }
+}
+
+/* Stili per i pulsanti di azione */
+.workout-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s ease;
+}
+
+.icon-button .material-icons {
+    font-size: 20px;
+}
+
+.icon-button:hover {
+    opacity: 0.7;
+}
+
+/* Stili per il modal di modifica */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.exercise-edit-item {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+/* Stili per input nelle tabelle */
+.sets-table input {
+    width: 70px;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Rimuovi eventuali stili specifici per edit e delete che potrebbero essere ereditati */
+.icon-button.edit,
+.icon-button.delete {
+    color: #666;
+}
+
+/* Stile per l'header con la freccia indietro */
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #666; /* Stesso colore grigio delle altre icone */
+}
+
+.back-button .material-icons {
+    font-size: 24px;
+}
+
+.detail-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 0;
+}
