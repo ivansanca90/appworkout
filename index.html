@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allenamenti</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <button class="back-button">←</button>
+        <h1>Allenamenti</h1>
+        <button class="note-button">Note</button>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active">Da fare</button>
+        <button class="tab inactive">Completati</button>
+    </div>
+
+    <div class="workout-list">
+        <div class="empty-state">
+            Clicca sul pulsante + per aggiungere il tuo allenamento
+        </div>
+    </div>
+
+    <div class="add-button">
+        <button id="openFormBtn">+</button>
+    </div>
+
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <form id="workoutForm">
+                <div class="form-header">
+                    <h2>Nuovo Allenamento</h2>
+                    <button type="button" class="close-btn">×</button>
+                </div>
+                
+                <div class="form-body">
+                    <div class="form-group">
+                        <input type="number" id="giorno" placeholder="Giorno" min="1" max="7" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="tipo" required>
+                            <option value="" disabled selected>Seleziona tipo</option>
+                            <option value="PUSH">PUSH</option>
+                            <option value="PULL">PULL</option>
+                            <option value="LEGS">LEGS</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="number" id="esercizi" placeholder="Numero esercizi" min="1" required>
+                    </div>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="submit">Aggiungi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button>Profilo</button>
+        <button>Promemoria</button>
+        <button class="active">Home</button>
+        <button>Chat</button>
+        <button>Notifiche</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

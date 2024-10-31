@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="detail-style.css">
+</head>
+<body>
+    <!-- Aggiungiamo l'header con il pulsante back -->
+    <div class="header">
+        <button class="back-button" onclick="window.location.href='index.html'">←</button>
+        <h1>Workout</h1>
+    </div>
+
+    <div class="exercise-container">
+        <div id="empty-state" class="empty-state">
+            <p>Clicca sul pulsante + per aggiungere il tuo allenamento</p>
+        </div>
+    </div>
+
+    <button class="add-exercise-button">+</button>
+
+    <!-- Modal per nuovo/modifica esercizio -->
+    <div class="modal" id="exerciseModal">
+        <div class="modal-content">
+            <h2>Nuovo Esercizio</h2>
+            <form id="newExerciseForm">
+                <input type="text" placeholder="Nome esercizio" required>
+                <div class="form-row">
+                    <input type="number" placeholder="Serie" required>
+                    <input type="number" placeholder="Ripetizioni" required>
+                    <input type="number" placeholder="Recupero (sec)" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="cancel-btn">Annulla</button>
+                    <button type="submit" class="save-btn">Salva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="timer-container">
+        <h2 class="timer-title">RECUPERO</h2>
+        <div class="timer-circle">
+            <svg class="timer-svg">
+                <circle class="timer-background" />
+                <circle class="timer-progress" />
+            </svg>
+            <div class="timer-display">00</div>
+        </div>
+        <button class="end-timer-button">Termina recupero</button>
+    </div>
+
+    <div class="bottom-nav">
+        <button>
+            <span class="icon">👤</span>
+            <span>Profilo</span>
+        </button>
+        <button>
+            <span class="icon">📅</span>
+            <span>Promemoria</span>
+        </button>
+        <button class="active">
+            <span class="icon">▣</span>
+            <span>Home</span>
+        </button>
+        <button>
+            <span class="icon">💬</span>
+            <span>Chat</span>
+        </button>
+        <button>
+            <span class="icon">🔔</span>
+            <span>Notifiche</span>
+        </button>
+    </div>
+
+    <script src="detail-script.js"></script>
+</body>
+</html> 
