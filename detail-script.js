@@ -161,6 +161,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let timerInterval;
 
+    function updateTimerSize() {
+        const timerCircle = document.querySelector('.timer-circle');
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        
+        if (window.matchMedia("(orientation: landscape)").matches) {
+            const size = Math.min(windowHeight * 0.4, 140);
+            timerCircle.style.width = `${size}px`;
+            timerCircle.style.height = `${size}px`;
+        } else {
+            const size = Math.min(windowWidth * 0.6, 200);
+            timerCircle.style.width = `${size}px`;
+            timerCircle.style.height = `${size}px`;
+        }
+    }
+
+    window.addEventListener('resize', updateTimerSize);
+    window.addEventListener('orientationchange', updateTimerSize);
+
     window.startTimer = function(seconds) {
         const timerContainer = document.querySelector('.timer-container');
         const timerDisplay = document.querySelector('.timer-display');
@@ -205,6 +224,8 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(timerInterval);
             timerContainer.style.display = 'none';
         });
+
+        updateTimerSize();
     }
 
     function playSound() {
