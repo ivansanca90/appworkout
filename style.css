@@ -1,36 +1,21 @@
-@font-face {
-    font-family: 'Circular-Black';
-    src: url('../fonts/Circular-Black.woff2') format('woff2'),
-         url('../fonts/Circular-Black.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 :root {
-    --primary-green: #1DB954;
-    --background-base: #121212;
-    --background-highlight: #282828;
-    --text-primary: #FFFFFF;
-    --text-secondary: #B3B3B3;
+    --primary-red: #C8102E;
+    --gray-text: #6B7280;
+    --background: #F5F5F5;
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Circular-Black', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--background-base);
-    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f5f5f5;
 }
 
 .header {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 16px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    padding: 20px;
 }
 
 .back-button {
@@ -46,7 +31,7 @@ body {
 }
 
 .note-button {
-    background-color: #1DB954;
+    background-color: #CC0000;
     color: white;
     border: none;
     padding: 8px 20px;
@@ -68,14 +53,14 @@ body {
 }
 
 .tab.active {
-    background-color: #1DB954;
+    background-color: #CC0000;
     color: white;
 }
 
 .tab.inactive {
     background-color: white;
-    border: 2px solid #1DB954;
-    color: #1DB954;
+    border: 2px solid #CC0000;
+    color: #CC0000;
 }
 
 .workout-list {
@@ -83,19 +68,14 @@ body {
 }
 
 .workout-item {
-    background-color: var(--background-highlight);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.workout-item:hover {
-    background-color: #3E3E3E;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    padding: 15px;
 }
 
 .day-tag {
-    background-color: #1DB954;
+    background-color: #CC0000;
     color: white;
     display: inline-block;
     padding: 5px 10px;
@@ -124,12 +104,12 @@ body {
 .arrow {
     width: 40px;
     height: 40px;
-    background-color: #1DB954;
+    background-color: #CC0000;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(29, 185, 84, 0.2);
+    box-shadow: 0 2px 4px rgba(204, 0, 0, 0.2);
     position: relative;
 }
 
@@ -161,7 +141,7 @@ body {
 }
 
 .bottom-nav button.active {
-    color: #1DB954;
+    color: #CC0000;
 }
 
 .add-button {
@@ -175,14 +155,14 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: #1DB954;
+    background-color: #CC0000;
     color: white;
     border: none;
     font-size: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(29, 185, 84, 0.3);
+    box-shadow: 0 2px 8px rgba(204, 0, 0, 0.3);
     cursor: pointer;
 }
 
@@ -212,8 +192,12 @@ body {
 }
 
 .form-header {
-    background-color: transparent;
-    border-bottom: 1px solid #3E3E3E;
+    background-color: #CC0000;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .form-header h2 {
@@ -254,7 +238,7 @@ body {
 .form-footer button {
     width: 100%;
     padding: 12px;
-    background: #1DB954;
+    background: #CC0000;
     color: white;
     border: none;
     border-radius: 8px;
@@ -270,7 +254,7 @@ body {
 }
 
 .day-tag {
-    background-color: #1DB954;
+    background-color: #CC0000;
     color: white;
     padding: 6px 12px;
     border-radius: 8px;
@@ -293,7 +277,7 @@ body {
 
 /* Nuovo stile per il bottone elimina */
 .action-btn.delete {
-    color: #1DB954;
+    color: #CC0000;
 }
 
 .empty-state {
@@ -305,233 +289,4 @@ body {
 
 .arrow {
     font-size: 0;
-}
-
-/* Barra di ricerca stile Spotify */
-.search-bar {
-    background-color: #242424;
-    border-radius: 500px;
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 0 1 364px;
-}
-
-.search-bar input {
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    width: 100%;
-    padding: 8px;
-}
-
-/* Stile delle card */
-.workout-item {
-    background-color: var(--background-highlight);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.workout-item:hover {
-    background-color: #3E3E3E;
-}
-
-/* Navigazione principale */
-.main-nav {
-    padding: 24px;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: var(--text-secondary);
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: color 0.2s ease;
-}
-
-.nav-item:hover {
-    color: var(--text-primary);
-}
-
-/* Bottoni principali */
-.primary-button {
-    background-color: var(--primary-green);
-    color: black;
-    font-weight: bold;
-    padding: 14px 32px;
-    border-radius: 500px;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-}
-
-.primary-button:hover {
-    transform: scale(1.04);
-}
-
-/* Stile per le sezioni */
-.section-title {
-    color: var(--text-primary);
-    font-size: 24px;
-    font-weight: bold;
-    margin: 24px 0;
-}
-
-/* Card grid layout */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 24px;
-    padding: 24px;
-}
-
-.card {
-    background-color: var(--background-highlight);
-    padding: 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-
-.card:hover {
-    background-color: #3E3E3E;
-}
-
-.card-image {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 4px;
-    margin-bottom: 16px;
-}
-
-.card-title {
-    color: var(--text-primary);
-    font-weight: bold;
-    margin-bottom: 4px;
-}
-
-.card-subtitle {
-    color: var(--text-secondary);
-    font-size: 14px;
-}
-
-/* Bottom navigation */
-.bottom-nav {
-    background-color: #181818;
-    border-top: 1px solid #282828;
-}
-
-.bottom-nav button {
-    color: var(--text-secondary);
-}
-
-.bottom-nav button.active {
-    color: var(--text-primary);
-}
-
-/* Modal style */
-.modal-content {
-    background-color: var(--background-highlight);
-    color: var(--text-primary);
-}
-
-.form-body input,
-.form-body select {
-    background-color: #3E3E3E;
-    color: var(--text-primary);
-    border: 1px solid #3E3E3E;
-}
-
-/* Empty state */
-.empty-state {
-    color: var(--text-secondary);
-}
-
-/* Media Queries per la responsività */
-
-/* Dispositivi molto piccoli (fino a 320px) */
-@media screen and (max-width: 320px) {
-    .workout-item {
-        padding: 12px;
-    }
-
-    .workout-text h2 {
-        font-size: 16px;
-    }
-
-    .workout-text p {
-        font-size: 12px;
-    }
-
-    .header {
-        padding: 12px 16px;
-    }
-
-    .search-bar {
-        flex: 0 1 200px;
-    }
-}
-
-/* Dispositivi mobili (fino a 480px) */
-@media screen and (max-width: 480px) {
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 12px;
-    }
-
-    .section-title {
-        font-size: 20px;
-        margin: 16px 0;
-        padding: 0 12px;
-    }
-
-    .tabs {
-        padding: 0 12px;
-        gap: 8px;
-    }
-
-    .tab {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .workout-list {
-        padding: 12px;
-    }
-
-    .modal-content {
-        width: 95%;
-        padding: 16px;
-    }
-}
-
-/* Tablet (fino a 768px) */
-@media screen and (max-width: 768px) {
-    .card-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .search-bar {
-        flex: 0 1 300px;
-    }
-}
-
-/* Regole generali per il touch */
-@media (hover: none) {
-    .card:hover,
-    .workout-item:hover {
-        transform: none;
-        background-color: var(--background-highlight);
-    }
-
-    .primary-button:active,
-    .recovery-button:active,
-    .start-workout-button:active {
-        transform: scale(0.98);
-    }
 }

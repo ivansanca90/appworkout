@@ -1,35 +1,22 @@
-@font-face {
-    font-family: 'Circular-Black';
-    src: url('../fonts/Circular-Black.woff2') format('woff2'),
-         url('../fonts/Circular-Black.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 :root {
-    --background-base: #121212;
-    --background-highlight: #282828;
-    --background-press: #181818;
-    --text-primary: #FFFFFF;
-    --text-secondary: #B3B3B3;
-    --primary-green: #1DB954;
+    --primary-red: #C8102E;
+    --gray-text: #6B7280;
+    --light-bg: #F5F5F5;
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Circular-Black', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--background-base);
-    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: white;
 }
 
 .exercise-container {
     padding: 0 20px 100px 20px;
-    background-color: var(--background-base);
 }
 
 .exercise-title {
-    color: var(--text-primary);
+    color: var(--primary-red);
     font-size: 24px;
     margin-bottom: 30px;
 }
@@ -47,34 +34,33 @@ body {
 .stat-circle {
     width: 50px;
     height: 50px;
-    background-color: var(--background-highlight);
+    background-color: #ffebee;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 8px;
-    color: var(--primary-green);
+    color: var(--primary-red);
 }
 
 .stat-value {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 4px;
-    color: var(--text-primary);
 }
 
 .stat-label {
-    color: var(--text-secondary);
+    color: #666;
     font-size: 14px;
 }
 
 .history-button {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--text-secondary);
-    border-radius: 500px;
-    background: transparent;
-    color: var(--text-primary);
+    border: 2px solid var(--primary-red);
+    border-radius: 25px;
+    background: white;
+    color: var(--primary-red);
     font-weight: bold;
     margin: 20px 0;
 }
@@ -88,7 +74,7 @@ body {
 .series-header {
     display: flex;
     justify-content: space-between;
-    color: var(--text-secondary);
+    color: #666;
     margin: 20px 0;
     padding: 0 60px 0 40px;
 }
@@ -101,7 +87,7 @@ body {
 }
 
 .series-number {
-    color: var(--primary-green);
+    color: var(--primary-red);
     font-weight: bold;
     font-size: 20px;
     width: 20px;
@@ -110,64 +96,53 @@ body {
 .series-row input {
     flex: 1;
     padding: 12px;
-    border: 1px solid var(--background-highlight);
+    border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    background-color: var(--background-press);
-    color: var(--text-primary);
 }
 
 .history-box {
-    background-color: var(--background-highlight);
+    background-color: white;
     padding: 20px;
     border-radius: 12px;
     margin: 20px 0;
-    box-shadow: none;
-    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .notes-section {
-    background: var(--background-highlight);
+    background: white;
     padding: 20px;
     border-radius: 12px;
     margin: 20px 0;
-    box-shadow: none;
-    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .series-section {
-    background: var(--background-highlight);
+    background: white;
     padding: 20px;
     border-radius: 12px;
     margin: 20px 0;
-    box-shadow: none;
-    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recovery-box {
-    background: var(--background-highlight);
+    background: white;
     padding: 20px;
     border-radius: 12px;
     margin: 20px 0;
-    box-shadow: none;
-    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recovery-button {
     width: 100%;
     padding: 15px;
-    background: var(--primary-green);
-    color: black;
+    background: var(--primary-red);
+    color: white;
     border: none;
-    border-radius: 500px;
+    border-radius: 8px;
     font-size: 16px;
     margin: 0;
     cursor: pointer;
-    transition: transform 0.1s ease;
-}
-
-.recovery-button:hover {
-    transform: scale(1.04);
 }
 
 .recovery-button.running {
@@ -185,8 +160,8 @@ body {
     width: 100%;
     padding: 15px;
     background: white;
-    border: 2px solid var(--primary-green);
-    color: var(--primary-green);
+    border: 2px solid var(--primary-red);
+    color: var(--primary-red);
     border-radius: 8px;
     font-size: 16px;
     margin-bottom: 15px;
@@ -195,17 +170,12 @@ body {
 .start-workout-button {
     width: 100%;
     padding: 15px;
-    background: var(--primary-green);
-    color: black;
+    background: var(--primary-red);
+    color: white;
     border: none;
-    border-radius: 500px;
+    border-radius: 8px;
     font-size: 16px;
     margin-bottom: 70px;
-    transition: transform 0.1s ease;
-}
-
-.start-workout-button:hover {
-    transform: scale(1.04);
 }
 
 .timer-container {
@@ -215,7 +185,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--background-base);
+    background-color: var(--primary-red);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -275,8 +245,7 @@ body {
     display: flex;
     align-items: center;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    color: var(--text-primary);
+    background: white;
 }
 
 .back-button {
@@ -285,7 +254,6 @@ body {
     font-size: 24px;
     padding: 0 15px 0 0;
     cursor: pointer;
-    color: var(--text-primary);
 }
 
 .header h1 {
@@ -298,27 +266,18 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: var(--background-press);
+    background: white;
     padding: 15px 0;
-    border-top: 1px solid var(--background-highlight);
+    border-top: 1px solid #eee;
     z-index: 1000;
 }
 
-.bottom-nav button {
-    color: var(--text-secondary);
-}
-
-.bottom-nav button.active {
-    color: var(--primary-green);
-}
-
 .content-box {
-    background-color: var(--background-highlight);
+    background-color: white;
     padding: 20px;
     border-radius: 12px;
     margin: 20px;
-    box-shadow: none;
-    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Stile per il pulsante + flottante */
@@ -329,11 +288,11 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: var(--primary-green);
-    color: black;
+    background-color: var(--primary-red);
+    color: white;
     font-size: 32px;
     border: none;
-    box-shadow: 0 2px 5px rgba(29, 185, 84, 0.2);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -358,12 +317,11 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--background-highlight);
+    background: white;
     padding: 20px;
     border-radius: 12px;
     width: 90%;
     max-width: 400px;
-    color: var(--text-primary);
 }
 
 .modal-content h2 {
@@ -380,10 +338,8 @@ body {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
-    border: 1px solid var(--background-highlight);
+    border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: var(--background-press);
-    color: var(--text-primary);
 }
 
 .form-buttons {
@@ -400,17 +356,12 @@ body {
 }
 
 .cancel-btn {
-    background: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--text-secondary);
-    border-radius: 500px;
+    background: #eee;
 }
 
 .save-btn {
-    background: var(--primary-green);
-    color: black;
-    font-weight: bold;
-    border-radius: 500px;
+    background: var(--primary-red);
+    color: white;
 }
 
 .exercise-section {
@@ -429,7 +380,7 @@ body {
 .empty-state {
     text-align: center;
     padding: 40px 20px;
-    color: var(--text-secondary);
+    color: #666;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -444,13 +395,13 @@ body {
 
 .empty-state h2 {
     margin: 0 0 10px 0;
-    color: var(--text-primary);
+    color: #333;
     font-size: 20px;
 }
 
 .empty-state p {
     margin: 0;
-    color: var(--text-secondary);
+    color: #666;
     font-size: 16px;
     line-height: 1.5;
     max-width: 280px;
@@ -475,135 +426,13 @@ body {
 }
 
 .end-timer-button {
-    background-color: var(--primary-green);
-    color: black;
+    background: white;
+    color: var(--primary-red);
     border: none;
     padding: 15px 30px;
-    border-radius: 500px;
+    border-radius: 25px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
-}
-
-/* Media Queries per la responsività */
-
-/* Dispositivi molto piccoli (fino a 320px) */
-@media screen and (max-width: 320px) {
-    .exercise-container {
-        padding: 0 12px 80px 12px;
-    }
-
-    .exercise-title {
-        font-size: 20px;
-    }
-
-    .stat-circle {
-        width: 40px;
-        height: 40px;
-    }
-
-    .stat-value {
-        font-size: 16px;
-    }
-
-    .stat-label {
-        font-size: 12px;
-    }
-}
-
-/* Dispositivi mobili (fino a 480px) */
-@media screen and (max-width: 480px) {
-    .header {
-        padding: 12px 16px;
-    }
-
-    .header h1 {
-        font-size: 18px;
-    }
-
-    .series-header {
-        padding: 0 40px 0 20px;
-        font-size: 14px;
-    }
-
-    .series-row {
-        gap: 8px;
-    }
-
-    .series-number {
-        font-size: 16px;
-        width: 16px;
-    }
-
-    .series-row input {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .timer-circle {
-        width: 160px;
-        height: 160px;
-    }
-
-    .timer-display {
-        font-size: 36px;
-    }
-
-    .modal-content {
-        width: 95%;
-        padding: 16px;
-    }
-
-    .form-buttons {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .cancel-btn, 
-    .save-btn {
-        width: 100%;
-    }
-}
-
-/* Tablet (fino a 768px) */
-@media screen and (max-width: 768px) {
-    .stats {
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-
-    .stat-item {
-        flex: 1 1 calc(50% - 16px);
-    }
-}
-
-/* Ottimizzazioni per il touch */
-@media (hover: none) {
-    .add-exercise-button:active {
-        transform: scale(0.95);
-    }
-
-    .recovery-button:active,
-    .start-workout-button:active,
-    .end-timer-button:active {
-        transform: scale(0.98);
-    }
-}
-
-/* Orientamento landscape su mobile */
-@media screen and (max-height: 480px) and (orientation: landscape) {
-    .timer-container {
-        flex-direction: row;
-        gap: 32px;
-    }
-
-    .timer-circle {
-        width: 140px;
-        height: 140px;
-    }
-
-    .timer-display {
-        font-size: 32px;
-    }
 }
