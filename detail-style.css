@@ -485,3 +485,125 @@ body {
     cursor: pointer;
     margin-top: 20px;
 }
+
+/* Media Queries per la responsività */
+
+/* Dispositivi molto piccoli (fino a 320px) */
+@media screen and (max-width: 320px) {
+    .exercise-container {
+        padding: 0 12px 80px 12px;
+    }
+
+    .exercise-title {
+        font-size: 20px;
+    }
+
+    .stat-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .stat-value {
+        font-size: 16px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+    }
+}
+
+/* Dispositivi mobili (fino a 480px) */
+@media screen and (max-width: 480px) {
+    .header {
+        padding: 12px 16px;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .series-header {
+        padding: 0 40px 0 20px;
+        font-size: 14px;
+    }
+
+    .series-row {
+        gap: 8px;
+    }
+
+    .series-number {
+        font-size: 16px;
+        width: 16px;
+    }
+
+    .series-row input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .timer-circle {
+        width: 160px;
+        height: 160px;
+    }
+
+    .timer-display {
+        font-size: 36px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 16px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .cancel-btn, 
+    .save-btn {
+        width: 100%;
+    }
+}
+
+/* Tablet (fino a 768px) */
+@media screen and (max-width: 768px) {
+    .stats {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .stat-item {
+        flex: 1 1 calc(50% - 16px);
+    }
+}
+
+/* Ottimizzazioni per il touch */
+@media (hover: none) {
+    .add-exercise-button:active {
+        transform: scale(0.95);
+    }
+
+    .recovery-button:active,
+    .start-workout-button:active,
+    .end-timer-button:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Orientamento landscape su mobile */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .timer-container {
+        flex-direction: row;
+        gap: 32px;
+    }
+
+    .timer-circle {
+        width: 140px;
+        height: 140px;
+    }
+
+    .timer-display {
+        font-size: 32px;
+    }
+}

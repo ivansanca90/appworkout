@@ -450,3 +450,88 @@ body {
 .empty-state {
     color: var(--text-secondary);
 }
+
+/* Media Queries per la responsività */
+
+/* Dispositivi molto piccoli (fino a 320px) */
+@media screen and (max-width: 320px) {
+    .workout-item {
+        padding: 12px;
+    }
+
+    .workout-text h2 {
+        font-size: 16px;
+    }
+
+    .workout-text p {
+        font-size: 12px;
+    }
+
+    .header {
+        padding: 12px 16px;
+    }
+
+    .search-bar {
+        flex: 0 1 200px;
+    }
+}
+
+/* Dispositivi mobili (fino a 480px) */
+@media screen and (max-width: 480px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .section-title {
+        font-size: 20px;
+        margin: 16px 0;
+        padding: 0 12px;
+    }
+
+    .tabs {
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .tab {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .workout-list {
+        padding: 12px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 16px;
+    }
+}
+
+/* Tablet (fino a 768px) */
+@media screen and (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .search-bar {
+        flex: 0 1 300px;
+    }
+}
+
+/* Regole generali per il touch */
+@media (hover: none) {
+    .card:hover,
+    .workout-item:hover {
+        transform: none;
+        background-color: var(--background-highlight);
+    }
+
+    .primary-button:active,
+    .recovery-button:active,
+    .start-workout-button:active {
+        transform: scale(0.98);
+    }
+}
