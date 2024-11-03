@@ -20,6 +20,18 @@ class WorkoutDetailManager {
             return;
         }
 
+        // Ripristina i dati della sessione se esistono
+        if (this.workout.esercizi) {
+            this.workout.esercizi.forEach(esercizio => {
+                if (!esercizio.sessionData) {
+                    esercizio.sessionData = Array(esercizio.serie).fill().map(() => ({
+                        weight: '',
+                        reps: ''
+                    }));
+                }
+            });
+        }
+
         document.getElementById('workoutTitle').textContent = this.workout.nome;
         this.renderExercises();
     }
@@ -76,38 +88,53 @@ class WorkoutDetailManager {
         }
 
         this.workout.esercizi.forEach(esercizio => {
-            const card = document.createElement('div');
-            card.className = 'exercise-card';
-            
-            // Creiamo la tabella delle serie
+            // Assicuriamoci che esista l'array temporaneo per i dati della sessione
+            if (!esercizio.sessionData) {
+                esercizio.sessionData = Array(esercizio.serie).fill().map(() => ({
+                    weight: '',
+                    reps: ''
+                }));
+            }
+
+            // Creiamo la tabella delle serie con i dati salvati
             let seriesRows = '';
-            for (let i = 1; i <= esercizio.serie; i++) {
+            for (let i = 0; i < esercizio.serie; i++) {
                 seriesRows += `
                     <tr>
                         <td>
-                            <div class="series-number">${i}</div>
+                            <div class="series-number">${i + 1}</div>
                         </td>
                         <td>
                             <input type="number" 
                                    class="weight-input" 
                                    placeholder="KG"
                                    min="0"
-                                   step="0.5">
+                                   step="0.5"
+                                   value="${esercizio.sessionData[i].weight}"
+                                   onchange="workoutDetailManager.saveSetData(${esercizio.id}, ${i}, 'weight', this.value)">
                         </td>
                         <td>
                             <input type="number" 
                                    class="reps-input" 
                                    placeholder="Reps"
-                                   min="1">
+                                   min="1"
+                                   value="${esercizio.sessionData[i].reps}"
+                                   onchange="workoutDetailManager.saveSetData(${esercizio.id}, ${i}, 'reps', this.value)">
                         </td>
                     </tr>
                 `;
             }
 
+            const card = document.createElement('div');
+            card.className = 'exercise-card';
+            
             card.innerHTML = `
                 <div class="exercise-header">
                     <h3 class="exercise-title">${esercizio.nome}</h3>
                     <div class="exercise-actions">
+                        <button class="icon-button weight-history" onclick="workoutDetailManager.showWeightHistory(${esercizio.id})">
+                            <span class="material-icons">bar_chart</span>
+                        </button>
                         <button class="icon-button edit" onclick="workoutDetailManager.editExercise(${esercizio.id})">
                             <span class="material-icons">edit</span>
                         </button>
@@ -123,17 +150,17 @@ class WorkoutDetailManager {
                         </div>
                         <span class="info-text">${esercizio.serie} Serie</span>
                     </div>
+                    <div class="info-box reps-label">
+                        <div class="info-icon">
+                            <span class="material-icons">fitness_center</span>
+                        </div>
+                        <span class="info-text">${esercizio.ripetizioni} Reps</span>
+                    </div>
                     <div class="info-box rest-label" onclick="workoutDetailManager.startRecoveryTimer(${esercizio.recupero})">
                         <div class="info-icon">
                             <span class="material-icons">timer</span>
                         </div>
                         <span class="info-text">${esercizio.recupero}s Recupero</span>
-                    </div>
-                    <div class="info-box weight-history-label">
-                        <div class="info-icon circle">
-                            <span class="material-icons">bar_chart</span>
-                        </div>
-                        <span class="info-text">Storico pesi</span>
                     </div>
                 </div>
                 <table class="series-table">
@@ -148,6 +175,17 @@ class WorkoutDetailManager {
                         ${seriesRows}
                     </tbody>
                 </table>
+                <div class="notes-input-container">
+                    <div class="notes-header">
+                        <span class="material-icons">notes</span>
+                        <span>Note</span>
+                    </div>
+                    <textarea 
+                        class="notes-textarea" 
+                        placeholder="Aggiungi note per questo esercizio..."
+                        onchange="workoutDetailManager.saveNotes(${esercizio.id}, this.value)"
+                    >${esercizio.sessionNotes || ''}</textarea>
+                </div>
             `;
             container.appendChild(card);
         });
@@ -160,6 +198,7 @@ class WorkoutDetailManager {
         if (exercise) {
             form.elements.exerciseName.value = exercise.nome;
             form.elements.exerciseSets.value = exercise.serie;
+            form.elements.exerciseReps.value = exercise.ripetizioni || 12;
             form.elements.exerciseRest.value = exercise.recupero;
             form.dataset.exerciseId = exercise.id;
         } else {
@@ -194,9 +233,9 @@ class WorkoutDetailManager {
             id: form.dataset.exerciseId ? parseInt(form.dataset.exerciseId) : Date.now(),
             nome: form.elements.exerciseName.value,
             serie: parseInt(form.elements.exerciseSets.value),
+            ripetizioni: parseInt(form.elements.exerciseReps.value),
             recupero: parseInt(form.elements.exerciseRest.value),
-            pesi: [], // Array per salvare i pesi
-            ripetizioni: [] // Array per salvare le ripetizioni
+            pesi: [],
         };
 
         if (!this.workout.esercizi) {
@@ -273,69 +312,154 @@ class WorkoutDetailManager {
             const completedWorkout = {
                 ...this.workout,
                 completedAt: new Date().toISOString(),
-                esercizi: this.workout.esercizi.map(esercizio => {
-                    // Raccogli i pesi e le ripetizioni dai campi input
-                    const pesi = [];
-                    const ripetizioni = [];
-                    
-                    // Seleziona tutte le righe della tabella per questo esercizio
-                    const rows = document.querySelectorAll(`.series-table tr:not(:first-child)`);
-                    
-                    rows.forEach(row => {
-                        const weightInput = row.querySelector('.weight-input');
-                        const repsInput = row.querySelector('.reps-input');
-                        
-                        pesi.push(weightInput ? weightInput.value || '-' : '-');
-                        ripetizioni.push(repsInput ? repsInput.value || '-' : '-');
-                    });
-
-                    return {
-                        id: esercizio.id,
-                        nome: esercizio.nome,
-                        serie: esercizio.serie,
-                        recupero: esercizio.recupero,
-                        pesi: pesi,
-                        ripetizioni: ripetizioni
-                    };
-                })
+                esercizi: this.workout.esercizi.map(esercizio => ({
+                    ...esercizio,
+                    sets: esercizio.sessionData || [], // Assicuriamoci che i sets esistano
+                    notes: esercizio.sessionNotes || '', // Aggiungi le note
+                    sessionData: undefined, // Rimuoviamo i dati temporanei
+                    sessionNotes: undefined
+                }))
             };
 
-            // Carica gli allenamenti completati esistenti
-            let completedWorkouts = [];
-            try {
-                const saved = localStorage.getItem('completedWorkouts');
-                completedWorkouts = saved ? JSON.parse(saved) : [];
-            } catch (e) {
-                console.error('Errore nel caricamento degli allenamenti completati:', e);
-                completedWorkouts = [];
-            }
-
-            // Verifica che completedWorkouts sia un array
-            if (!Array.isArray(completedWorkouts)) {
-                completedWorkouts = [];
-            }
-            
-            // Aggiungi il nuovo allenamento completato
+            // Salva l'allenamento completato
+            let completedWorkouts = JSON.parse(localStorage.getItem('completedWorkouts') || '[]');
             completedWorkouts.push(completedWorkout);
-            
-            // Salva nel localStorage
-            try {
-                localStorage.setItem('completedWorkouts', JSON.stringify(completedWorkouts));
-                console.log('Allenamento salvato:', completedWorkout); // Debug
-                console.log('Tutti gli allenamenti:', completedWorkouts); // Debug
-            } catch (e) {
-                console.error('Errore nel salvataggio dell\'allenamento:', e);
-                this.showNotification('Errore nel salvataggio dell\'allenamento', 'error');
-                return;
-            }
+            localStorage.setItem('completedWorkouts', JSON.stringify(completedWorkouts));
+
+            // Debug - verifica i dati salvati
+            console.log('Allenamento completato:', completedWorkout);
+
+            // Resetta i dati della sessione nel workout corrente
+            this.workout.esercizi.forEach(esercizio => {
+                delete esercizio.sessionData;
+                delete esercizio.sessionNotes;
+            });
+            this.saveToLocalStorage();
 
             this.showNotification('Allenamento completato con successo!', 'success');
-
-            // Reindirizza alla pagina degli allenamenti completati
             setTimeout(() => {
                 window.location.href = 'completed-workouts.html';
             }, 1500);
         }
+    }
+
+    editExercise(id) {
+        // Trova l'esercizio da modificare
+        const exercise = this.workout.esercizi.find(e => e.id === id);
+        if (exercise) {
+            // Apre il modal con i dati dell'esercizio
+            this.openModal(exercise);
+        }
+    }
+
+    saveSetData(exerciseId, setIndex, field, value) {
+        const exercise = this.workout.esercizi.find(e => e.id === exerciseId);
+        if (exercise) {
+            if (!exercise.sessionData) {
+                exercise.sessionData = Array(exercise.serie).fill().map(() => ({
+                    weight: '',
+                    reps: ''
+                }));
+            }
+            exercise.sessionData[setIndex][field] = value;
+            this.saveToLocalStorage();
+        }
+    }
+
+    saveNotes(exerciseId, notes) {
+        const exercise = this.workout.esercizi.find(e => e.id === exerciseId);
+        if (exercise) {
+            exercise.sessionNotes = notes;
+            this.saveToLocalStorage();
+        }
+    }
+
+    showWeightHistory(exerciseId) {
+        const exercise = this.workout.esercizi.find(e => e.id === exerciseId);
+        if (!exercise) return;
+
+        // Recupera tutti gli allenamenti completati
+        const completedWorkouts = JSON.parse(localStorage.getItem('completedWorkouts') || '[]');
+        
+        // Trova tutti i dati storici per questo esercizio
+        const exerciseHistory = completedWorkouts
+            .map(workout => {
+                const matchingExercise = workout.esercizi.find(e => e.nome === exercise.nome);
+                if (matchingExercise && matchingExercise.sets) {
+                    return {
+                        date: new Date(workout.completedAt),
+                        sets: matchingExercise.sets,
+                        notes: matchingExercise.notes
+                    };
+                }
+                return null;
+            })
+            .filter(Boolean) // Rimuove i null
+            .sort((a, b) => b.date - a.date); // Ordina per data decrescente
+
+        // Crea il modal per lo storico
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        
+        const historyContent = `
+            <div class="modal-content weight-history-modal">
+                <div class="modal-header">
+                    <h2>Storico ${exercise.nome}</h2>
+                    <button class="close-button" onclick="this.closest('.modal').remove()">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="history-content">
+                    ${exerciseHistory.length === 0 ? `
+                        <div class="empty-state">
+                            <span class="material-icons">history</span>
+                            <p>Nessuno storico disponibile</p>
+                        </div>
+                    ` : exerciseHistory.map(history => `
+                        <div class="history-entry">
+                            <div class="history-date">
+                                ${history.date.toLocaleDateString('it-IT', {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: 'numeric'
+                                })}
+                            </div>
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Serie</th>
+                                        <th>Peso (KG)</th>
+                                        <th>Reps</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${history.sets.map((set, index) => `
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${set.weight || '-'}</td>
+                                            <td>${set.reps || '-'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                            ${history.notes ? `
+                                <div class="history-notes">
+                                    <div class="notes-header">
+                                        <span class="material-icons">notes</span>
+                                        <span>Note</span>
+                                    </div>
+                                    <p class="notes-content">${history.notes}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        modal.innerHTML = historyContent;
+        document.body.appendChild(modal);
+        setTimeout(() => modal.style.display = 'block', 0);
     }
 }
 

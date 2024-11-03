@@ -86,8 +86,8 @@ class CompletedWorkoutsManager {
                                         ${Array.from({length: esercizio.serie}, (_, i) => `
                                             <tr>
                                                 <td>${i + 1}</td>
-                                                <td>${esercizio.pesi[i] || '-'}</td>
-                                                <td>${esercizio.ripetizioni[i] || '-'}</td>
+                                                <td>${esercizio.sets?.[i]?.weight || '-'}</td>
+                                                <td>${esercizio.sets?.[i]?.reps || '-'}</td>
                                             </tr>
                                         `).join('')}
                                     </tbody>
@@ -151,11 +151,11 @@ class CompletedWorkoutsManager {
                                             <tr>
                                                 <td>${i + 1}</td>
                                                 <td>
-                                                    <input type="number" value="${esercizio.pesi[i] || ''}" 
+                                                    <input type="number" value="${esercizio.sets?.[i]?.weight || ''}" 
                                                            id="editWeight_${exIndex}_${i}">
                                                 </td>
                                                 <td>
-                                                    <input type="number" value="${esercizio.ripetizioni[i] || ''}" 
+                                                    <input type="number" value="${esercizio.sets?.[i]?.reps || ''}" 
                                                            id="editReps_${exIndex}_${i}">
                                                 </td>
                                             </tr>
@@ -188,12 +188,13 @@ class CompletedWorkoutsManager {
                 esercizio.serie = parseInt(document.getElementById(`editExerciseSets_${exIndex}`).value);
                 esercizio.recupero = parseInt(document.getElementById(`editExerciseRest_${exIndex}`).value);
                 
-                esercizio.pesi = [];
-                esercizio.ripetizioni = [];
-                
+                // Aggiorna i sets
+                esercizio.sets = [];
                 for (let i = 0; i < esercizio.serie; i++) {
-                    esercizio.pesi[i] = document.getElementById(`editWeight_${exIndex}_${i}`).value;
-                    esercizio.ripetizioni[i] = document.getElementById(`editReps_${exIndex}_${i}`).value;
+                    esercizio.sets[i] = {
+                        weight: document.getElementById(`editWeight_${exIndex}_${i}`).value,
+                        reps: document.getElementById(`editReps_${exIndex}_${i}`).value
+                    };
                 }
             });
             
