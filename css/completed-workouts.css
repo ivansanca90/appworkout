@@ -233,3 +233,62 @@
     color: #1d1d1f;
     margin: 0;
 }
+
+.workout-notes {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.workout-notes h4 {
+    color: #666;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.workout-notes p {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.exercise-notes {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #007AFF;
+}
+
+.notes-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.notes-header .material-icons {
+    font-size: 20px;
+    color: #007AFF;
+}
+
+.notes-content {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+}

@@ -160,7 +160,7 @@ class WorkoutDetailManager {
                         <div class="info-icon">
                             <span class="material-icons">timer</span>
                         </div>
-                        <span class="info-text">${esercizio.recupero}s Recupero</span>
+                        <span class="info-text">${esercizio.recupero}s</span>
                     </div>
                 </div>
                 <table class="series-table">
@@ -308,38 +308,33 @@ class WorkoutDetailManager {
 
     completeWorkout() {
         if (confirm('Sei sicuro di voler completare questo allenamento?')) {
-            // Raccogli tutti i dati dell'allenamento
+            console.log('Esercizi prima del completamento:', this.workout.esercizi); // Debug
+            
             const completedWorkout = {
-                ...this.workout,
+                id: Date.now(),
+                nome: this.workout.nome,
                 completedAt: new Date().toISOString(),
-                esercizi: this.workout.esercizi.map(esercizio => ({
-                    ...esercizio,
-                    sets: esercizio.sessionData || [], // Assicuriamoci che i sets esistano
-                    notes: esercizio.sessionNotes || '', // Aggiungi le note
-                    sessionData: undefined, // Rimuoviamo i dati temporanei
-                    sessionNotes: undefined
-                }))
+                esercizi: this.workout.esercizi.map(esercizio => {
+                    const mappedExercise = {
+                        id: esercizio.id,
+                        nome: esercizio.nome,
+                        serie: esercizio.serie,
+                        recupero: esercizio.recupero,
+                        sets: esercizio.sessionData || [],
+                        note: esercizio.note || ''
+                    };
+                    console.log('Esercizio mappato:', mappedExercise); // Debug
+                    return mappedExercise;
+                })
             };
 
-            // Salva l'allenamento completato
             let completedWorkouts = JSON.parse(localStorage.getItem('completedWorkouts') || '[]');
             completedWorkouts.push(completedWorkout);
+            
+            console.log('Allenamento salvato:', completedWorkout); // Debug
             localStorage.setItem('completedWorkouts', JSON.stringify(completedWorkouts));
 
-            // Debug - verifica i dati salvati
-            console.log('Allenamento completato:', completedWorkout);
-
-            // Resetta i dati della sessione nel workout corrente
-            this.workout.esercizi.forEach(esercizio => {
-                delete esercizio.sessionData;
-                delete esercizio.sessionNotes;
-            });
-            this.saveToLocalStorage();
-
-            this.showNotification('Allenamento completato con successo!', 'success');
-            setTimeout(() => {
-                window.location.href = 'completed-workouts.html';
-            }, 1500);
+            window.location.href = 'index.html';
         }
     }
 
@@ -366,10 +361,11 @@ class WorkoutDetailManager {
         }
     }
 
-    saveNotes(exerciseId, notes) {
+    saveNotes(exerciseId, value) {
         const exercise = this.workout.esercizi.find(e => e.id === exerciseId);
         if (exercise) {
-            exercise.sessionNotes = notes;
+            exercise.note = value;
+            console.log('Note salvate:', exercise); // Debug
             this.saveToLocalStorage();
         }
     }
@@ -389,13 +385,13 @@ class WorkoutDetailManager {
                     return {
                         date: new Date(workout.completedAt),
                         sets: matchingExercise.sets,
-                        notes: matchingExercise.notes
+                        note: matchingExercise.note
                     };
                 }
                 return null;
             })
-            .filter(Boolean) // Rimuove i null
-            .sort((a, b) => b.date - a.date); // Ordina per data decrescente
+            .filter(Boolean)
+            .sort((a, b) => b.date - a.date);
 
         // Crea il modal per lo storico
         const modal = document.createElement('div');
@@ -442,13 +438,13 @@ class WorkoutDetailManager {
                                     `).join('')}
                                 </tbody>
                             </table>
-                            ${history.notes ? `
+                            ${history.note ? `
                                 <div class="history-notes">
                                     <div class="notes-header">
                                         <span class="material-icons">notes</span>
-                                        <span>Note</span>
+                                        <span>Note:</span>
                                     </div>
-                                    <p class="notes-content">${history.notes}</p>
+                                    <p class="notes-content">${history.note}</p>
                                 </div>
                             ` : ''}
                         </div>

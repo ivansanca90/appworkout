@@ -97,18 +97,18 @@
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
     z-index: 1000;
-    -webkit-overflow-scrolling: touch; /* Per iOS scrolling fluido */
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-content {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     background: white;
-    border-radius: 20px 20px 0 0;
+    border-radius: 0 0 20px 20px;
     padding: 25px;
-    animation: slideUp 0.3s ease-out;
+    animation: slideDown 0.3s ease-out;
     max-height: 90vh;
     overflow-y: auto;
 }
@@ -276,15 +276,15 @@
 
 /* Aggiungi questi stili per l'animazione di chiusura */
 .modal.closing .modal-content {
-    animation: slideDown 0.3s ease-in forwards;
+    animation: slideUp 0.3s ease-in forwards;
 }
 
-@keyframes slideDown {
+@keyframes slideUp {
     from {
         transform: translateY(0);
     }
     to {
-        transform: translateY(100%);
+        transform: translateY(-100%);
     }
 }
 
@@ -301,7 +301,7 @@
         }
         to {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(-20px);
         }
     }
 }
@@ -823,7 +823,8 @@ main {
 /* Stili per il modal dello storico pesi */
 .weight-history-modal {
     max-width: 600px;
-    margin: 20px auto;
+    margin: 0 auto;
+    animation: slideDown 0.3s ease-out;
 }
 
 .history-content {
@@ -972,5 +973,61 @@ main {
     
     .notes-textarea {
         font-size: 14px;
+    }
+}
+
+/* Nuova animazione per la discesa dall'alto */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Animazione di chiusura */
+.modal.closing .modal-content {
+    animation: slideUp 0.3s ease-in forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+/* Stili specifici per il modal dello storico pesi */
+.weight-history-modal {
+    max-width: 600px;
+    margin: 0 auto;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Media query per desktop */
+@media (min-width: 768px) {
+    .modal-content {
+        top: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+
+    .modal.closing .modal-content {
+        animation: fadeOut 0.3s ease-in forwards;
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
     }
 }

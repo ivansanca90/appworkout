@@ -28,7 +28,15 @@ class CompletedWorkoutsManager {
             return;
         }
 
-        this.completedWorkouts.forEach((workout, index) => {
+        console.log('Allenamenti completati:', this.completedWorkouts);
+
+        const sortedWorkouts = [...this.completedWorkouts].sort((a, b) => {
+            return new Date(b.completedAt) - new Date(a.completedAt);
+        });
+
+        sortedWorkouts.forEach((workout, index) => {
+            console.log('Rendering workout:', workout);
+            
             const card = document.createElement('div');
             card.className = 'completed-workout-card';
             card.id = `workout-${index}`;
@@ -60,8 +68,9 @@ class CompletedWorkoutsManager {
                     </div>
                 </div>
                 <div id="workout-details-${index}" class="workout-details">
-                    <div class="exercise-list">
-                        ${workout.esercizi.map(esercizio => `
+                    ${workout.esercizi.map(esercizio => {
+                        console.log('Rendering esercizio:', esercizio);
+                        return `
                             <div class="exercise-item">
                                 <div class="exercise-name">${esercizio.nome}</div>
                                 <div class="exercise-details">
@@ -74,6 +83,15 @@ class CompletedWorkoutsManager {
                                         ${esercizio.recupero}s Recupero
                                     </span>
                                 </div>
+                                ${esercizio.note ? `
+                                    <div class="exercise-notes">
+                                        <div class="notes-header">
+                                            <span class="material-icons">notes</span>
+                                            <span>Note:</span>
+                                        </div>
+                                        <p class="notes-content">${esercizio.note}</p>
+                                    </div>
+                                ` : ''}
                                 <table class="sets-table">
                                     <thead>
                                         <tr>
@@ -93,8 +111,8 @@ class CompletedWorkoutsManager {
                                     </tbody>
                                 </table>
                             </div>
-                        `).join('')}
-                    </div>
+                        `;
+                    }).join('')}
                 </div>
             `;
 
@@ -117,6 +135,10 @@ class CompletedWorkoutsManager {
                     <div class="form-group">
                         <label>Nome Allenamento</label>
                         <input type="text" value="${workout.nome}" id="editWorkoutName">
+                    </div>
+                    <div class="form-group">
+                        <label>Note</label>
+                        <textarea id="editWorkoutNotes" rows="3">${workout.note || ''}</textarea>
                     </div>
                     <div class="exercises-list">
                         ${workout.esercizi.map((esercizio, exIndex) => `
@@ -182,6 +204,7 @@ class CompletedWorkoutsManager {
             
             // Aggiorna i dati dell'allenamento
             workout.nome = document.getElementById('editWorkoutName').value;
+            workout.note = document.getElementById('editWorkoutNotes').value;
             
             workout.esercizi.forEach((esercizio, exIndex) => {
                 esercizio.nome = document.getElementById(`editExerciseName_${exIndex}`).value;
