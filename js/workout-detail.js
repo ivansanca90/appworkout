@@ -308,7 +308,7 @@ class WorkoutDetailManager {
 
     completeWorkout() {
         if (confirm('Sei sicuro di voler completare questo allenamento?')) {
-            console.log('Esercizi prima del completamento:', this.workout.esercizi); // Debug
+            console.log('Esercizi prima del completamento:', this.workout.esercizi);
             
             const completedWorkout = {
                 id: Date.now(),
@@ -323,16 +323,33 @@ class WorkoutDetailManager {
                         sets: esercizio.sessionData || [],
                         note: esercizio.note || ''
                     };
-                    console.log('Esercizio mappato:', mappedExercise); // Debug
                     return mappedExercise;
                 })
             };
 
+            // Salva l'allenamento completato
             let completedWorkouts = JSON.parse(localStorage.getItem('completedWorkouts') || '[]');
             completedWorkouts.push(completedWorkout);
-            
-            console.log('Allenamento salvato:', completedWorkout); // Debug
             localStorage.setItem('completedWorkouts', JSON.stringify(completedWorkouts));
+
+            // Resetta i dati della sessione nell'allenamento originale
+            const workouts = JSON.parse(localStorage.getItem('allenamenti') || '[]');
+            const workoutIndex = workouts.findIndex(w => w.id === this.workout.id);
+            
+            if (workoutIndex !== -1) {
+                // Resetta sessionData e note per ogni esercizio
+                workouts[workoutIndex].esercizi = workouts[workoutIndex].esercizi.map(esercizio => ({
+                    ...esercizio,
+                    sessionData: Array(esercizio.serie).fill().map(() => ({
+                        weight: '',
+                        reps: ''
+                    })),
+                    note: ''
+                }));
+                
+                // Salva l'allenamento resettato
+                localStorage.setItem('allenamenti', JSON.stringify(workouts));
+            }
 
             window.location.href = 'index.html';
         }
